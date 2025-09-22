@@ -5,7 +5,7 @@ const fs = require('fs');
 const LOG_FILE = path.join(__dirname, 'storage.log');
 const app = express();
 
-const port = 8080;
+const port = 8082;
  
 app.use(express.text({ type: "*/*" })); // to Accept text/plain
 
