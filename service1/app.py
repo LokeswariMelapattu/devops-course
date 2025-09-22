@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import Response
 import datetime
 import time
 import shutil 
@@ -33,12 +34,8 @@ def log_status_vstorage(status_record):
     # logging to vstorage
     print(f"Logging to vstorage: {status_record}")
     
-def combine_status_records(record1, record2):
-    # combining two status records into one string with newline separator
-    combined = f"{record1}\n{record2}" 
-    return combined
-
-@app.get("/status")
+ 
+@app.get("/status", response_class=Response)
 async def read_status():
     """Status endpoint to analysis the status and log the status to log file and vstorage."""
     print("Status endpoint called")
@@ -47,11 +44,9 @@ async def read_status():
     log_status_vstorage(status_record1)
     
     status_record2 = analyze_status() # from service 2 TODO: Replace with actual call to service 2
-    
-    combined_status = combine_status_records(status_record1, status_record2)
-    
-    print(f"Combined status: {combined_status}")
-    return combined_status
+    combined_response = f"{status_record1}\n{status_record2}"
+    print(f"Combined status: {combined_response}")
+    return combined_response
    
 
 @app.get("/log")
