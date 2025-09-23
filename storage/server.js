@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
-const LOG_FILE = path.join(__dirname, 'storage.log');
+const LOG_FILE = path.join("/app/storage", 'storage.log');
 const app = express();
 
 const port = 8082;

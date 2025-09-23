@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Diagnostics;
-using System.IO;
+using System.Diagnostics; 
 using System.Net.Http;
 
 
@@ -13,6 +12,14 @@ public class StatusController : ControllerBase
 {
     private static readonly DateTime StartTime = DateTime.UtcNow;
 
+    private readonly string vStoragePath = "/vstorage";
+    private readonly string storagePath = "http://storage:8082/log";
+    private readonly HttpClient _client;
+    
+    public StatusController(HttpClient client)
+    {
+        _client = client;
+    }
     private string AnalyzeStatus()
     {
         var timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
@@ -26,13 +33,11 @@ public class StatusController : ControllerBase
 
     private async Task LogToStorageAsync(string record)
     {
-        using var client = new HttpClient();
-
         try
         {
             var content = new StringContent(record, System.Text.Encoding.UTF8, "text/plain");
     
-            var response = await client.PostAsync("http://storage:8002/log", content); 
+            var response = await _client.PostAsync(storagePath, content); 
             if (response.IsSuccessStatusCode)
             {
                 Console.WriteLine("Log successfully sent to Storage service.");
@@ -49,11 +54,12 @@ public class StatusController : ControllerBase
     }
 
 
-    private void LogToVStorage(string record)
+    private  async Task LogToVStorage(string record)
     {
         try
-        {
-            // write to the vstoragr 
+        {          
+            // Append log
+            await System.IO.File.AppendAllTextAsync(vStoragePath, record + Environment.NewLine);
             Console.WriteLine("Log successfully written to vStorage.");
         }
         catch (Exception ex)
@@ -69,7 +75,7 @@ public class StatusController : ControllerBase
         var status = AnalyzeStatus();
         Console.WriteLine(status);
         await LogToStorageAsync(status);
-        LogToVStorage(status);
+        await LogToVStorage(status);
         return Ok(status);
     }
 }
