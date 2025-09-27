@@ -12,7 +12,7 @@ public class StatusController : ControllerBase
 {
     private static readonly DateTime StartTime = DateTime.UtcNow;
 
-    private readonly string vStoragePath = "/vstorage";
+    private readonly string vStoragePath = "/app/vstorage";
     private readonly string storagePath = "http://storage:8082/log";
     private readonly HttpClient _client;
     

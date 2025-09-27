@@ -6,7 +6,7 @@ services:
     ports:
       - "8199:8080"
     volumes:
-      - ./vstorage:/vstorage
+      - ./vstorage:/app/vstorage
     networks:
       - services_network
     depends_on:
@@ -16,16 +16,20 @@ services:
   service2:
     build: ./service2
     volumes:
-      - ./vstorage:/vstorage
+      - ./vstorage:/app/vstorage
     networks:
       - services_network
     depends_on:
       - storage
   storage:
     build: ./storage
+    volumes:
+      - storage_data:/app/data
     networks:
       - services_network
  
+volumes:
+  storage_data:
 
 networks:
   services_network:

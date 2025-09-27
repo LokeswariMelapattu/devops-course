@@ -1,17 +1,16 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI
 from fastapi.responses import Response
 import datetime
 import time
 import shutil 
-import requests
-import os
+import requests 
  
 app = FastAPI(title="service1")
 
 start_time = time.time() #To store service starting time
 service2_url = "http://service2:8080/status" # URL of service 2
 storage_url = "http://storage:8082/log" # URL of storage service
-vstorage_path = "/vstorage" # Path to vstorage log file
+vstorage_path = "/app/vstorage" # Path to vstorage log file
 
 def analyze_status():
     # implementation of status analysis
