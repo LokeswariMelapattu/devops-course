@@ -1,6 +1,4 @@
-# DEVOPS - exercise1 (Service1, Service2, Storage)
-
-# Exercise 1 – Multi-Service System with Persistent Storage
+# DEVOPS - exercise1 Multi-Service System with Persistent Storage (Service1, Service2, Storage)
 
 This repository contains a simple system with three services, implemented in **different technologies**:
 
@@ -16,17 +14,20 @@ This repository contains a simple system with three services, implemented in **d
 - **Service1** – Python (FastAPI)  
   - The **only service accessible from outside**.  
   - Collects system uptime and free disk space.  
-  - Forwards requests to **Service2** and **Storage**.  
   - Stores logs in:
     - Shared file volume `vstorage`
-    - Storage service (via REST API) 
+    - Storage service 
+  - Forwards requests to **Service2**. 
+  - Combine status from Service1 and Service2 and returns 
   - Endpoints:
     - `GET /status` → Analyze uptime , space and Append new log entry (`text/plain`)
     - `GET /log` → Retrieve all logs (`text/plain`)
 
 - **Service2** – .NET 9 Web API  
-  - Collects system uptime and free disk space.  
-  - Logs records in both `vstorage` and the Storage service.  
+  - Collects system uptime and free disk space.   
+  - Stores logs in:
+    - Shared file volume `vstorage`
+    - Storage service 
   - Returns status info back to Service1. 
   - Endpoints:
     - `GET /status` → Analyze uptime , space and Append new log entry (`text/plain`) 
@@ -41,7 +42,7 @@ This repository contains a simple system with three services, implemented in **d
 
 - **vstorage** – host file `./vstorage` mounted into Service1 and Service2 at `/app/vstorage` and appended per request. This is the simple shared file method. 
  
-- **Networking** – 
+- **Networking** 
 - A single user-defined `services_network` network connects all three services. Only Service1 publishes a host port.
 
 
@@ -56,7 +57,7 @@ This repository contains a simple system with three services, implemented in **d
 - Fetch second storage log : `cat ./vstorage`
 - Stop: `docker-compose down`
 
-cleanup instructions
+### Cleanup instructions
 - Clean the logs from host-file storage: `> ./vstorage`
 - Remove the named volume for Storage: `docker volume rm devops-course_storage_data`
 
