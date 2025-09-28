@@ -1,0 +1,13 @@
+Use of LLM in the Exercise
+
+I used ChatGPT (version 5) as a guidance tool during the implementation of this exercise.
+
+The LLM assisted me mainly with configuration examples and basic code structure, such as learning how to create and map routes in Python (FastAPI) and JavaScript (Node.js).
+
+Since I have focused on DevOps and Docker, not programming, I leveraged the LLM to generate some boilerplate functions in Python and JavaScript. This allowed me to focus more on the containerization and orchestration aspects of the exercise.
+
+For the written report, I have prepared my own short notes, and used the LLM only to restructure and polish the text into a clear and well-formatted README file.
+
+Importantly, the LLM helped me to identify the issue/bugs during the implementation and testing.
+
+Overall, the LLM was a supporting tool for learning and documentation

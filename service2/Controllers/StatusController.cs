@@ -10,23 +10,26 @@ namespace service2.Controllers;
 [Route("status")]
 public class StatusController : ControllerBase
 {
-    private static readonly DateTime StartTime = DateTime.UtcNow;
-
+    private readonly DateTime StartTime; 
     private readonly string vStoragePath = "/app/vstorage";
     private readonly string storagePath = "http://storage:8082/log";
     private readonly HttpClient _client;
     
-    public StatusController(HttpClient client)
+    public StatusController(HttpClient client, Lazy<DateTime>  serviceStartTime)
     {
         _client = client;
+        StartTime = serviceStartTime.Value;
     }
     private string AnalyzeStatus()
     {
         var timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
-        var uptime = Math.Abs((DateTime.UtcNow - StartTime).TotalHours);
-        var currentPath = Directory.GetCurrentDirectory();
-        var drive = new DriveInfo(currentPath);
+        var uptime = Math.Abs((DateTime.UtcNow - StartTime).TotalHours);  
+        var currentPath = Directory.GetCurrentDirectory(); 
+        // Determine root path based on OS
+        string rootPath = Path.DirectorySeparatorChar == '\\' ? currentPath : "/";
+
+        var drive = new DriveInfo(rootPath);
         var freeDiskMb = drive.AvailableFreeSpace / (1024 * 1024);
         return $"{timestamp}: uptime {uptime:F2} hours, free disk in root: {freeDiskMb} MBytes"; 
     }
