@@ -57,7 +57,7 @@ This repository contains a simple system with three services, implemented in **d
 - **Uptime**: Both services report container uptime i.e service starting time and convert to hours with two decimal places.
 - **Disk space measurement**: 
   - Service1: Reads free disk space on the root filesystem (`/`) in MB using shutil library.
-  - Service2: Reads free disk space on the root filesystem (`/`) in MB using the driveinfo (`/` on `Linux`, `C:\` on `Windows`).
+  - Service2: Reads free disk space on the root filesystem (`/`) in MB using the driveinfo (`/` on `Linux`, `CurrentDirectoryDrive` on `Windows`).
 
 **Measurement relevance**: 
 
@@ -107,6 +107,7 @@ This repository contains a simple system with three services, implemented in **d
 ### Cleanup instructions
 - Clean the logs from host-file storage: `> ./vstorage`
 - Remove the named volume for Storage: `docker volume rm devops-course_storage_data`
+- To remove docker images: `docker image rm devops-course_service1 devops-course_service2 devops-course_storage`
 
 
 ## Challenges and Problems 

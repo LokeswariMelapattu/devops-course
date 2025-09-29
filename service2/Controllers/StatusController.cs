@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Diagnostics; 
-using System.Net.Http;
+using System.Net.Http; 
 
 
 namespace service2.Controllers;
@@ -15,10 +15,10 @@ public class StatusController : ControllerBase
     private readonly string storagePath = "http://storage:8082/log";
     private readonly HttpClient _client;
     
-    public StatusController(HttpClient client, Lazy<DateTime>  serviceStartTime)
+    public StatusController(HttpClient client)
     {
         _client = client;
-        StartTime = serviceStartTime.Value;
+        StartTime = StartTimeHostedService.StartTime;
     }
     private string AnalyzeStatus()
     {
