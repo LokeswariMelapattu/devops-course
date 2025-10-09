@@ -1,0 +1,11 @@
+
+CONTAINER ID   IMAGE                                COMMAND                  CREATED          STATUS          PORTS                    NAMES
+043abeaf11cb   devops-course-service1               "uvicorn app:app --h…"   37 minutes ago   Up 37 minutes   0.0.0.0:8199->8080/tcp   devops-course-service1-1
+5166ed7cc0b4   devops-course-service2               "dotnet service2.dll"    37 minutes ago   Up 37 minutes   5110/tcp                 devops-course-service2-1
+2d474695dcb9   devops-course-storage                "docker-entrypoint.s…"   37 minutes ago   Up 37 minutes   3000/tcp                 devops-course-storage-1
+
+NETWORK ID     NAME                             DRIVER    SCOPE
+ace17e363963   bridge                           bridge    local
+148980345a18   devops-course_services_network   bridge    local
+232c9f50c8db   host                             host      local
+b3e4995b823e   none                             null      local
